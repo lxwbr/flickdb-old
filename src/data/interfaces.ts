@@ -54,3 +54,12 @@ export interface IMovie {
 
     videoFile ?: IVideoFile
 }
+
+export interface IListProps {
+    movies : IMovie[];
+    onMovieChanged ?: (movies: IMovie[]) => void;
+}
+
+export interface IListState {
+    selectedMovies : IMovie[]
+}

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { IMovie } from '../data/interfaces';
+import { IMovie, IListProps, IListState } from '../data/interfaces';
 
 function comp(movie: IMovie) {
 	return <div className='movie'>
@@ -9,25 +9,36 @@ function comp(movie: IMovie) {
 }
 
 // List component
-export default class List extends React.Component<any, any> {
-  constructor(props: any){
+export default class List extends React.Component<IListProps, IListState> {
+  constructor(props: IListProps){
         super(props);
-        this.state = { data: this.props.data };
+        this.state = {
+          selectedMovies: []
+        };
+        this.changedMovie = this.changedMovie.bind(this);
     }
 
-  private handleChange(i: number) : void {
-        // TODO: fix this (not referring to the component)
-        this.setState({ selected: this.state.data[i] });
+  changedMovie(index: number | number[]) {
+    if (typeof index === "number") {
+      this.setState({ selectedMovies: [this.props.movies[index]] });
+      if (this.props.onMovieChanged)
+        this.props.onMovieChanged([this.props.movies[index]])
+    } else {
+      // TODO: test
+      this.setState({ selectedMovies: index.map(i => this.props.movies[i]) });
+      if (this.props.onMovieChanged)
+        this.props.onMovieChanged(this.state.selectedMovies)
     }
+  }
 
   render() {
-    const List = require('react-list-select')
-    
+    const ReactList = require('./react-list-select/List')
+
     return (
-      <List items={this.state.data.map(function(movie: IMovie) {return comp(movie)})}
-            selected={[0]}
-            multiple={false}
-            onChange={this.handleChange} />
+      <ReactList items={this.props.movies.map(function(movie: IMovie) {return comp(movie)})}
+                 multiple={false}
+                 onChange={this.changedMovie}
+                 />
     );
   }
 }
