@@ -6,16 +6,21 @@ var React = _interopRequire(require("react"));
 
 var cx = _interopRequire(require("classnames"));
 
-var ListItem = React.createClass({
-	displayName: "ListItem",
-
-	getDefaultProps: function getDefaultProps() {
+class ListItem extends React.Component {
+	constructor(props) {
+		super(props);
+		this.displayName = "ListItem"
+	}
+	
+	static get defaultProps() {
 		return {
 			disabled: false,
 			selected: false,
-			focused: false };
-	},
-	render: function render() {
+			focused: false
+		}
+	}
+
+	render() {
 		var _this = this;
 
 		var classes = cx("react-list-select--item", {
@@ -35,6 +40,6 @@ var ListItem = React.createClass({
 			this.props.children
 		);
 	}
-});
+}
 
 module.exports = ListItem;

@@ -1,14 +1,18 @@
 import * as React from 'react';
-import { IMovie } from '../data/interfaces';
-import { TextField, Checkbox, Toolbar } from 'react-md';
+import { TextField, Checkbox, Toolbar, Button } from 'react-md';
+import { CSSTransitionGroup } from 'react-transition-group'
 import GenresSelector from './genres-selector';
+import { IMovieDetailsProps, IGenre } from '../data/interfaces';
 
-const GENRES = ['Drama', 'Comedy', 'Action'];
+const GENRES = [{value: 1, name: 'Drama'},
+                {value: 2, name: 'Comedy'},
+                {value: 3, name: 'Action'}];
 
 export default class MovieDetails extends React.Component<IMovieDetailsProps, undefined> {
       constructor(props: IMovieDetailsProps) {
         super(props);
-      },
+      }
+      
       render() {
         return (
           <div>
@@ -17,7 +21,7 @@ export default class MovieDetails extends React.Component<IMovieDetailsProps, un
                 id="adult"
                 name="simpleCheckboxes"
                 defaultChecked={this.props.movie.adult ? this.props.movie.adult : false}
-                onChange={(value) => {
+                onChange={(value: boolean) => {
                   if (this.props.onMoviePropChange)
                     this.props.onMoviePropChange("adult", value);
                 }}
@@ -28,7 +32,7 @@ export default class MovieDetails extends React.Component<IMovieDetailsProps, un
                   placeholder="Original Title"
                   className="md-cell"
                   value={this.props.movie.original_title ? this.props.movie.original_title : ''}
-                  onChange={(value) => {
+                  onChange={(value: string) => {
                     if (this.props.onMoviePropChange)
                       this.props.onMoviePropChange("original_title", value);
                   }}
@@ -43,7 +47,7 @@ export default class MovieDetails extends React.Component<IMovieDetailsProps, un
                   pattern="^\d+(\.|\,)\d{2}"
                   className="md-cell md-cell--12"
                   value={this.props.movie.budget ? this.props.movie.budget : ''}
-                  onChange={(value) => {
+                  onChange={(value: number) => {
                     if (this.props.onMoviePropChange)
                       this.props.onMoviePropChange("budget", value);
                   }}
@@ -51,18 +55,17 @@ export default class MovieDetails extends React.Component<IMovieDetailsProps, un
                 <GenresSelector
                   genres={this.props.movie.genres ? this.props.movie.genres : []}
                   possibleGenres={GENRES}
-                  className="md-cell--12"
-                  onGenresChanged={(genres: String[]) => {
+                  onGenresChanged={(genres: IGenre[]) => {
                     if (this.props.onMoviePropChange)
                       this.props.onMoviePropChange("genres", genres);
-                  }/>
+                  }}/>
                 <TextField
                   id="original_language"
                   label="Original Language"
                   type="text"
                   className="md-cell md-cell--3"
                   value={this.props.movie.original_language ? this.props.movie.original_language : ''}
-                  onChange={(value) => {
+                  onChange={(value: string) => {
                     if (this.props.onMoviePropChange)
                       this.props.onMoviePropChange("original_language", value);
                   }}
@@ -73,7 +76,7 @@ export default class MovieDetails extends React.Component<IMovieDetailsProps, un
                   rows={2}
                   className="md-cell md-cell--12"
                   value={this.props.movie.overview ? this.props.movie.overview : ''}
-                  onChange={(value) => {
+                  onChange={(value: string) => {
                     if (this.props.onMoviePropChange)
                       this.props.onMoviePropChange("overview", value);
                   }}
@@ -86,12 +89,19 @@ export default class MovieDetails extends React.Component<IMovieDetailsProps, un
                   value={this.props.movie.popularity ? this.props.movie.popularity : ''}
                   pattern="^\d+(\.|\,)\d{2}"
                   className="md-cell md-cell--3"
-                  onChange={(value) => {
+                  onChange={(value: number) => {
                     if (this.props.onMoviePropChange)
                       this.props.onMoviePropChange("popularity", value);
                   }}
                 />
             </form>
+            <Button
+              floating
+              secondary
+              fixed
+            >
+              add
+            </Button>
           </div>
         );
       }

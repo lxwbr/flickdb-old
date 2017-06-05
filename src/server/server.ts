@@ -2,21 +2,27 @@
 import * as express from "express";
 import * as bodyParser from 'body-parser';
 import { graphqlExpress, graphiqlExpress } from 'graphql-server-express';
-import { mockServer, addResolveFunctionsToSchema } from 'graphql-tools';
+import { addMockFunctionsToSchema, addResolveFunctionsToSchema } from 'graphql-tools';
 
 import { schema } from './data/schema';
 import resolvers from './data/resolvers';
-import mocks from './data/mocks';
+
+// Manual mocking
+// import { mockServer } from "graphql-tools";
+// import mocks from './data/mocks';
 
 const GRAPHQL_PORT = 8080;
 
-export default (mock: Boolean) => {
+export default (mock: boolean) => {
   const graphQLServer = express();
 
-  if (mock)
-    mockServer(schema, mocks);
-  else
+  if (mock) {
+    addMockFunctionsToSchema({schema});
+    // Manual mocking
+    // mockServer(schema, mocks);
+  } else {
     addResolveFunctionsToSchema(schema, resolvers);
+  }
 
   graphQLServer.use('/graphql', bodyParser.json(), graphqlExpress({
     schema: schema

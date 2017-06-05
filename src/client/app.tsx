@@ -1,5 +1,5 @@
 import * as React from 'react';
-import SplitPane from './split-pane';
+import SplitPane from './components/split-pane';
 
 // App
 export class App extends React.Component<undefined, undefined> {

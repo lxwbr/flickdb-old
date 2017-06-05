@@ -13,7 +13,11 @@ if (isDevMode) enableLiveReload({strategy: 'react-hmr'});
 
 const createWindow = async () => {
   // Start movie server
-  startMovieServer(true);
+  if (isDevMode) {
+    startMovieServer(true);
+  } else {
+    startMovieServer(false);
+  }
 
   // Create the browser window.
   mainWindow = new BrowserWindow({

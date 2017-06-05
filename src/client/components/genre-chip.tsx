@@ -1,11 +1,12 @@
 import * as React from 'react';
-import { IStateChipProps,  } from '../data/interfaces.ts'
+import { IGenreChipProps } from '../data/interfaces'
 
 import { Chip } from 'react-md';
 
 export default class GenreChip extends React.Component<IGenreChipProps, any> {
   _handleRemove = () => {
-    this.props.onClick(this.props.genre);
+    if (this.props.onClick)
+      this.props.onClick(this.props.genre);
   };
 
   render() {

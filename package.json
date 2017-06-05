@@ -49,6 +49,8 @@
     "@types/react": "^0.14.57",
     "@types/react-dom": "^0.14.23",
     "@types/body-parser": "^1.16.3",
+    "@types/lodash": "^4.14.64",
+    "@types/sequelize": "^4.0.55",
     "electron-compile": "^6.4.1",
     "electron-devtools-installer": "^2.2.0",
     "lodash": "^4.17.4",
@@ -56,11 +58,12 @@
     "react-dom": "^15.5.4",
     "react-hot-loader": "^3.0.0-beta.7",
     "react-bootstrap": "^0.31.0",
-    "react-md": "^1.0.14",
+    "react-md": "^1.0.15",
     "react-split-pane": "^0.1.63",
     "react-list-select": "^0.3.0",
     "react-link-state": "^0.1.2",
     "react-transition-group": "^1.1.3",
+    "react-relay": "^1.0.0",
     "tslib": "^1.7.0",
     "sequelize": "^3.30.4",
     "sqlite3": "^3.1.8",
@@ -79,6 +82,7 @@
     "electron-prebuilt-compile": "1.6.6",
     "tslint": "^4.5.1",
     "typescript": "^2.1.6",
-    "graphql-tools": "^0.11.0"
+    "graphql-tools": "^0.11.0",
+    "relay-compiler": "^1.0.0"
   }
 }

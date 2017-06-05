@@ -9,12 +9,28 @@ export type ISO_639_1 = string
 
 export type URI = string
 
+export type ID = string
+
 /**
  * Name-value wrapper.
  */
 export interface INamedValue<T> {
     readonly name?: string
-    value?: T
+    value: T
+}
+
+export interface INode {
+    readonly id: ID
+}
+
+export interface IEdge<T extends INode> {
+    readonly id: ID
+    readonly node: T
+}
+
+export interface IConnection<T extends INode> {
+    readonly id: ID
+    readonly edges: IEdge<T>[]
 }
 
 export interface IVideoFile {
@@ -22,17 +38,20 @@ export interface IVideoFile {
     location ?: URI
 }
 
+export interface IGenre extends INamedValue<number> {
+    // Nothing additional here for now
+}
+
 /**
  * Provides movie related fields as found in themoviedb API description (v4)
  */
-export interface IMovie {
+export interface IMovie extends INode {
     adult?: boolean
     backdrop_path?: string         // TODO: not implemented
     belongs_to_collection?: object // TODO: not implemented
     budget?: number
-    genres?: INamedValue<number>[]
+    genres?: IGenre[]
     homepage?: string
-    id?: number
     imdb_id?: string // minLength: 9, maxLength: 9, pattern: ^tt[0-9]{7}
     original_language?: string
     original_title?: string
@@ -57,7 +76,7 @@ export interface IMovie {
 
 export interface IListProps {
     movies : IMovie[];
-    onMoviePropChange ?: (prop: String, value: any) => void;
+    onMovieChanged ?: (movie: IMovie) => void;
 }
 
 export interface IListState {
@@ -66,16 +85,22 @@ export interface IListState {
 
 export interface IMovieDetailsProps {
     movie: IMovie;
-    onMovieChanged ?: (movie: IMovie) => void;
+    onMoviePropChange ?: (prop: string, value: any) => void;
 }
 
 export interface IGenreChipProps {
-    genre: String;
-    onRemove: () => void;
+    key: number;
+    genre: IGenre;
+    onClick: (genre: IGenre) => void;
 }
 
 export interface IGenresSelectorProps {
-    genres: String[];
-    possibleGenres: String[];
-    onGenresChanged ?: (genres: String[]) => void;
+    genres: IGenre[];
+    possibleGenres: IGenre[];
+    onGenresChanged ?: (genres: IGenre[]) => void;
+}
+
+export interface IViewer {
+    id: ID
+    movies: IConnection<IMovie>
 }
